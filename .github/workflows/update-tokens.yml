@@ -1,0 +1,28 @@
+name: Extract tokens
+
+on:
+  push:
+    paths:
+      - 'harjoitukset/build/*.html'
+
+jobs:
+  extract-tokens:
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        python-version: 14
+    
+    - name: Extract Answer Token
+      run: ./replace_tokens.sh
+    
+    - name: Add, Commit & Push
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: "tokens.md"
+        message: "Automatic: Update tokens.md"
